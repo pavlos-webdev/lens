@@ -42,7 +42,30 @@ document.querySelectorAll('.reveal').forEach(function(el) {
   revealObserver.observe(el);
 });
 
-// ── Gallery Data ──
+// ── Category Cover Image ──
+function setCover(event, category) {
+  var file = event.target.files[0];
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var card = event.target.closest('.cat-card');
+
+    // Remove any existing cover img
+    var existing = card.querySelector('.cat-cover');
+    if (existing) existing.remove();
+
+    // Insert the cover image behind the overlay
+    var img = document.createElement('img');
+    img.className = 'cat-cover';
+    img.src = e.target.result;
+    card.insertBefore(img, card.querySelector('.cat-card-overlay'));
+    card.classList.add('has-cover');
+  };
+  reader.readAsDataURL(file);
+}
+
+
 const galleryData = {
   portrait: [
     { src: 'images/IMG_6279.JPEG', caption: 'Green Viper' },
