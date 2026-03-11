@@ -314,55 +314,74 @@
   }
   .gallery-grid::-webkit-scrollbar { width: 3px; }
   .gallery-grid::-webkit-scrollbar-thumb { background: var(--gold); }
+
+ /* --- GALLERY PHOTO EXPANSION --- */
+
 .gallery-photo {
   position: relative;
-  aspect-ratio: 1 / 1; /* force square thumbnails */
-  overflow: visible;   /* allow expansion outside square */
+  aspect-ratio: 1 / 1; 
   cursor: none;
+  z-index: 1; /* Establish base stacking order */
+}
+
+/* 1. Elevate the parent container so the expanded image covers the grid */
+.gallery-photo:hover {
+  z-index: 50; 
 }
 
 .gallery-photo-inner {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gallery-photo-inner img {
+  /* 2. Absolute positioning from the start prevents the "snap" */
+  position: absolute;
   width: 100%;
   height: 100%;
- 
-  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  object-fit: cover; /* 3. Forces a clean square crop initially */
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* expand image to natural ratio */
+/* The Pop-out Expansion */
 .gallery-photo:hover .gallery-photo-inner img {
-  height: auto;
+  /* Release the strict dimensions to let it reveal its natural ratio */
   width: auto;
-  max-width: none;
-  max-height: none;
-  transform: scale(1.05);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.05);
-  z-index: 5;
+  height: auto;
+  
+  /* Guarantee it pops slightly outside the grid square */
+  min-width: 110%;
+  min-height: 110%;
+  
+  /* Cap the expansion so horizontal/vertical shots don't blow out the screen */
+  max-width: 180%; 
+  max-height: 180%;
+  
+  object-fit: contain; 
+  transform: scale(1.05); /* Keeps your desired physical "pop" */
+  
+  /* Add depth and a subtle gold theme border to the expanded image */
+  box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+  border: 1px solid rgba(200, 169, 110, 0.3); 
 }
-  .gallery-photo:hover .gallery-photo-inner { transform: scale(1.05); }
-  .gallery-photo-label {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 1.8rem 1.2rem 1rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    font-style: italic; font-size: 0.9rem; color: var(--paper);
-    opacity: 0; transition: opacity 0.4s;
-  }
-  .gallery-photo:hover .gallery-photo-label { opacity: 1; }
-  .gallery-photo-hint {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 0.18em;
-    color: rgba(200,169,110,0.2); text-transform: uppercase; text-align: center; pointer-events: none;
-  }
 
+/* Ensure your label stays on top of the expanded image */
+.gallery-photo-label {
+  position: absolute; 
+  bottom: 0; left: 0; right: 0;
+  padding: 1.8rem 1.2rem 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  font-style: italic; font-size: 0.9rem; color: var(--paper);
+  opacity: 0; transition: opacity 0.4s;
+  z-index: 60; /* Added z-index */
+}
+
+.gallery-photo:hover .gallery-photo-label { opacity: 1; }
+ 
   /*CHANGE THIS FOR IMAGES */
   /* Gallery placeholder colors */
   .gp1  { background:linear-gradient(135deg,#1a1510,#2d2418); }
