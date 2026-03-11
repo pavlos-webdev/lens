@@ -20,11 +20,13 @@ document.addEventListener('mousemove', function(e) {
 function bindCursorHover() {
   document.querySelectorAll('a, button, input, textarea, select, .cat-card, .gallery-photo').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width = '56px'; ring.style.height = '56px';
+      ring.style.width  = '56px';
+      ring.style.height = '56px';
       ring.style.borderColor = 'rgba(200,169,110,0.8)';
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width = '36px'; ring.style.height = '36px';
+      ring.style.width  = '36px';
+      ring.style.height = '36px';
       ring.style.borderColor = 'rgba(200,169,110,0.5)';
     });
   });
@@ -42,37 +44,34 @@ document.querySelectorAll('.reveal').forEach(function(el) {
   revealObserver.observe(el);
 });
 
-// ── Category Cover Image ──
-function setCover(event, category) {
-  var file = event.target.files[0];
-  if (!file) return;
+// ── Auto-set category covers from first gallery image ──
+function initCovers() {
+  document.querySelectorAll('.cat-card').forEach(function(card) {
+    var onclick = card.getAttribute('onclick') || '';
+    var match = onclick.match(/openGallery\('(\w+)'\)/);
+    if (!match) return;
+    var category = match[1];
+    var images = galleryData[category];
+    if (!images || !images.length) return;
 
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var card = event.target.closest('.cat-card');
-
-    // Remove any existing cover img
-    var existing = card.querySelector('.cat-cover');
-    if (existing) existing.remove();
-
-    // Insert the cover image behind the overlay
     var img = document.createElement('img');
     img.className = 'cat-cover';
-    img.src = e.target.result;
+    img.src = images[0].src;
+    img.alt = category + ' cover';
     card.insertBefore(img, card.querySelector('.cat-card-overlay'));
     card.classList.add('has-cover');
-  };
-  reader.readAsDataURL(file);
+  });
 }
 
-
+// ── Gallery Data ──
 const galleryData = {
   portrait: [
-    { src: 'images/IMG_6279.JPEG', caption: 'Green Viper' },
-    { src: 'images/merc-amg-cla45.jpeg', caption: 'AMG CLA45 - In the Woods ' },
-    { src: 'images/mazda3-snowy-blizzard.JPEG', caption: 'Mazda3 - Wintery Blizzard' },
-    { src: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80', caption: 'Golden Hour' },
-    { src: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=800&q=80', caption: 'Street Style' }
+    { src: 'images/mclaren-fading-to-purple.JPEG',  caption: 'Mclaren - Fading to Purple' },
+    { src: 'images/viper-green.JPEG',            caption: 'Viper - Green Snake' },
+    { src: 'images/merc-amg-cla45.JPEG',         caption: 'AMG CLA45 - In the Woods' },
+    { src: 'images/mazda3-snowy-blizzard.JPEG',  caption: 'Mazda3 - Wintery Blizzard' },
+    { src: 'images/porsche-911-wingman.JPEG',    caption: 'Porsche 911 - Wingman' },
+    { src: 'images/mclaren-front-bpillar.JPEG',  caption: 'Mclaren - Angels Alore' },
   ],
   landscape: [
     { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80', caption: 'Mountain Pass' },
@@ -94,6 +93,9 @@ const descriptions = {
   editorial: 'Concept-driven visual storytelling for publications and brands.'
 };
 
+// ── Initialise covers once DOM + data are ready ──
+initCovers();
+
 // ── Gallery Open / Close ──
 function openGallery(category) {
   const grid   = document.getElementById('galleryGrid');
@@ -104,13 +106,16 @@ function openGallery(category) {
   document.getElementById('galleryDesc').innerText = descriptions[category];
 
   grid.innerHTML = '';
-  images.forEach(function(img) {
+  images.forEach(function(item) {
     const div = document.createElement('div');
     div.className = 'gallery-photo';
-    div.onclick = function() { openLightbox(img.src); };
+    div.onclick = function() { openLightbox(item.src); };
+
+    // gallery-photo-thumb wrapper is required for the 1:1 square ratio
     div.innerHTML =
-      '<img src="' + img.src + '" alt="' + img.caption + '">' +
-      '<div class="gallery-photo-label">' + img.caption + '</div>';
+      '<img src="' + item.src + '" alt="' + item.caption + '">' +
+      '<div class="gallery-photo-label">' + item.caption + '</div>';
+
     grid.appendChild(div);
   });
 
@@ -158,8 +163,8 @@ function handleSubmit(e) {
 
   var subject = encodeURIComponent('Photography Inquiry' + (service ? ' - ' + service : ''));
   var body    = encodeURIComponent(
-    'Name: ' + name +
-    '\nEmail: ' + email +
+    'Name: '    + name    +
+    '\nEmail: ' + email   +
     '\nService: ' + (service || 'N/A') +
     '\n\nMessage:\n' + message
   );
