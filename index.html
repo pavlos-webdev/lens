@@ -59,6 +59,7 @@
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--paper); text-decoration: none; opacity: 0.7; transition: opacity 0.3s;
+    cursor: none;
   }
   .nav-links a:hover { opacity: 1; }
 
@@ -195,7 +196,7 @@
   #portfolio { background: #080808; border-top: 1px solid rgba(200,169,110,0.15); }
   .portfolio-header { margin-bottom: 4rem; }
 
-  .cat-grid { display: grid; grid-template-columns: repeat(3,0.25fr); gap: 3px; justify-content: center;}
+  .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; justify-content: center;}
   .cat-card {
     position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: none;
   }
@@ -265,7 +266,7 @@
     display: none; flex-direction: column;
     opacity: 0; transition: opacity 0.45s;
   }
-  #galleryOverlay.visible { opacity: 1; }
+  #galleryOverlay.visible { display: flex; opacity: 1; }
 
   .gallery-nav {
     display: flex; justify-content: space-between; align-items: center;
@@ -283,7 +284,7 @@
   }
   .gallery-breadcrumb a:hover { color: var(--gold); }
   .gallery-breadcrumb .sep { color: rgba(200,169,110,0.3); }
-  .gallery-breadcrumb .current { color: var(--gold); }
+  .gallery-breadcrumb .current { color: var(--gold); text-transform: capitalize; }
 
   .gallery-close {
     display: flex; align-items: center; gap: 0.8rem;
@@ -297,7 +298,7 @@
 
   .gallery-title-bar { padding: 3rem 3.5rem 2rem; flex-shrink: 0; }
   .gallery-title-bar h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Bebas Neue', sans-serif; text-transform: capitalize;
     font-size: clamp(3rem, 7vw, 6rem); letter-spacing: 0.03em; line-height: 1; color: var(--paper);
   }
   .gallery-title-bar h2 span { color: var(--gold); }
@@ -306,102 +307,77 @@
     color: rgba(245,240,232,0.45); margin-top: 0.6rem;
   }
 
+  /* --- MASONRY GALLERY GRID --- */
   .gallery-grid {
     flex: 1; overflow-y: auto;
     padding: 0 3.5rem 4rem;
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 3px; align-content: start;
+    column-count: 3;
+    column-gap: 1.5rem;
   }
   .gallery-grid::-webkit-scrollbar { width: 3px; }
   .gallery-grid::-webkit-scrollbar-thumb { background: var(--gold); }
 
- /* --- GALLERY PHOTO EXPANSION --- */
+  .gallery-photo {
+    position: relative;
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+    cursor: none;
+    overflow: hidden;
+  }
 
-.gallery-photo {
-  position: relative;
-  aspect-ratio: 1 / 1; 
-  cursor: none;
-  z-index: 1; /* Establish base stacking order */
-}
+  .gallery-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
-/* 1. Elevate the parent container so the expanded image covers the grid */
-.gallery-photo:hover {
-  z-index: 50; 
-}
+  .gallery-photo:hover img {
+    transform: scale(1.03); 
+  }
 
-.gallery-photo-inner {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .gallery-photo-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 2rem 1.2rem 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    font-style: italic; font-size: 0.9rem; color: var(--paper);
+    opacity: 0; transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .gallery-photo:hover .gallery-photo-label { opacity: 1; }
 
-.gallery-photo-inner img {
-  /* 2. Absolute positioning from the start prevents the "snap" */
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 3. Forces a clean square crop initially */
-  box-shadow: 0 0 0 rgba(0,0,0,0);
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+  /* --- LIGHTBOX OVERLAY --- */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 9990;
+    background: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+    cursor: none;
+  }
+  #lightbox.visible {
+    opacity: 1; pointer-events: auto;
+  }
+  #lightbox img {
+    max-width: 85vw; max-height: 85vh;
+    object-fit: contain;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+    transform: scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  #lightbox.visible img { transform: scale(1); }
 
-/* The Pop-out Expansion */
-.gallery-photo:hover .gallery-photo-inner img {
-  /* Release the strict dimensions to let it reveal its natural ratio */
-  width: auto;
-  height: auto;
-  
-  /* Guarantee it pops slightly outside the grid square */
-  min-width: 110%;
-  min-height: 110%;
-  
-  /* Cap the expansion so horizontal/vertical shots don't blow out the screen */
-  max-width: 180%; 
-  max-height: 180%;
-  
-  object-fit: contain; 
-  transform: scale(1.05); /* Keeps your desired physical "pop" */
-  
-  /* Add depth and a subtle gold theme border to the expanded image */
-  box-shadow: 0 25px 50px rgba(0,0,0,0.9);
-  border: 1px solid rgba(200, 169, 110, 0.3); 
-}
+  .lightbox-close {
+    position: absolute; top: 2rem; right: 3.5rem;
+    background: none; border: 1px solid rgba(200,169,110,0.2);
+    color: var(--paper); padding: 0.6rem 1.4rem;
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.2em; text-transform: uppercase; cursor: none;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .lightbox-close:hover { border-color: var(--gold); color: var(--gold); }
 
-/* Ensure your label stays on top of the expanded image */
-.gallery-photo-label {
-  position: absolute; 
-  bottom: 0; left: 0; right: 0;
-  padding: 1.8rem 1.2rem 1rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  font-style: italic; font-size: 0.9rem; color: var(--paper);
-  opacity: 0; transition: opacity 0.4s;
-  z-index: 60; /* Added z-index */
-}
-
-.gallery-photo:hover .gallery-photo-label { opacity: 1; }
- 
-  /*CHANGE THIS FOR IMAGES */
-  /* Gallery placeholder colors */
-  .gp1  { background:linear-gradient(135deg,#1a1510,#2d2418); }
-  .gp2  { background:linear-gradient(160deg,#0e1418,#1a2228); }
-  .gp3  { background:linear-gradient(145deg,#181010,#2a1818); }
-  .gp4  { background:linear-gradient(155deg,#101810,#182818); }
-  .gp5  { background:linear-gradient(170deg,#18181a,#2a2228); }
-  .gp6  { background-image: url("images/IMG_6279.JPEG");
-  background-size: cover;
-  background-position: center; }
-  .gp7  { background-image: url("images/IMG_6279.JPEG");
-  background-size: cover;
-  background-position: center; }
-  .gp8  { background-image: url("images/IMG_6279.JPEG");
-  background-size: cover;
-  background-position: center; }
-  .gp9  { background:linear-gradient(140deg,#141818,#202828); }
-  .gp10 { background:linear-gradient(135deg,#201414,#301e1e); }
-  .gp11 { background:linear-gradient(155deg,#101820,#182030); }
-  .gp12 { background:linear-gradient(145deg,#1e1010,#2c1a1a); }
 
   /* Services */
   #services { border-top: 1px solid rgba(200,169,110,0.15); }
@@ -448,7 +424,7 @@
   .social-link {
     font-family: 'DM Mono', monospace; font-size: 0.62rem;
     letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--smoke); text-decoration: none; transition: color 0.3s;
+    color: var(--smoke); text-decoration: none; transition: color 0.3s; cursor: none;
   }
   .social-link:hover { color: var(--gold); }
 
@@ -464,8 +440,8 @@
     border: 1px solid rgba(200,169,110,0.15); color: var(--paper);
     padding: 1rem 1.2rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem;
     outline: none; transition: border-color 0.3s, background 0.3s; appearance: none;
+    cursor: none;
   }
-  .form-select { cursor: none; }
   .form-select option { background: #1a1a1a; color: var(--paper); }
   .form-textarea { min-height: 140px; resize: vertical; }
   .form-input:focus, .form-textarea:focus, .form-select:focus {
@@ -541,9 +517,14 @@
     .contact-layout { grid-template-columns: 1fr; gap: 4rem; }
     .form-row { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
-    .gallery-grid { grid-template-columns: repeat(2,1fr); padding: 0 2rem 3rem; }
+    .gallery-grid { column-count: 2; column-gap: 1rem; padding: 0 2rem 3rem; }
     .gallery-nav { padding: 1.5rem 2rem; }
     .gallery-title-bar { padding: 2rem 2rem 1.5rem; }
+    .lightbox-close { top: 1.5rem; right: 2rem; }
+    #lightbox img { max-width: 95vw; max-height: 90vh; }
+  }
+  @media (max-width: 600px) {
+    .gallery-grid { column-count: 1; }
   }
 </style>
 </head>
@@ -552,9 +533,8 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Navigation -->
 <nav>
-  <a href="#hero" class="nav-logo"></a>
+  <a href="#hero" class="nav-logo">LENS</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#portfolio">Work</a></li>
@@ -563,7 +543,6 @@
   </ul>
 </nav>
 
-<!-- Hero -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid">
@@ -589,7 +568,6 @@
   </div>
 </section>
 
-<!-- About -->
 <section id="about">
   <div class="about-portrait">
     <div class="portrait-frame"></div>
@@ -621,7 +599,6 @@
   </div>
 </section>
 
-<!-- Portfolio — category cards -->
 <section id="portfolio">
   <div class="portfolio-header">
     <p class="section-label reveal">Selected Work</p>
@@ -629,7 +606,6 @@
   </div>
   <div class="cat-grid">
 
-    <!-- Portrait -->
     <div class="cat-card reveal" onclick="openGallery('portrait')">
       <div class="cat-card-bg cat-bg-portrait">
         <div class="cat-imgs">
@@ -651,7 +627,6 @@
       </div>
     </div>
 
-    <!-- Landscape -->
     <div class="cat-card reveal reveal-delay-1" onclick="openGallery('landscape')">
       <div class="cat-card-bg cat-bg-landscape">
         <div class="cat-imgs">
@@ -673,7 +648,6 @@
       </div>
     </div>
 
-    <!-- Editorial -->
     <div class="cat-card reveal reveal-delay-2" onclick="openGallery('editorial')">
       <div class="cat-card-bg cat-bg-editorial">
         <div class="cat-imgs">
@@ -698,7 +672,6 @@
   </div>
 </section>
 
-<!-- Gallery Overlay -->
 <div id="galleryOverlay">
   <div class="gallery-nav">
     <div class="gallery-breadcrumb">
@@ -720,7 +693,16 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<!-- Services -->
+<div id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-right: 8px;">
+      <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    Close
+  </button>
+  <img id="lightbox-img" src="" alt="Expanded view">
+</div>
+
 <section id="services">
   <p class="section-label reveal">What I offer</p>
   <h2 class="section-title reveal">Services</h2>
@@ -743,7 +725,6 @@
   </div>
 </section>
 
-<!-- Contact -->
 <section id="contact">
   <p class="section-label reveal">Get in touch</p>
   <h2 class="section-title reveal">Let's Create<br>Something</h2>
@@ -811,14 +792,13 @@
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-logo">LENS</div>
-  <div class="footer-copy">&copy; 2026 Your Name Photography. All rights reserved.</div>
+  <div class="footer-copy">&copy; 2026 Pavlos Stamatopoulos. All rights reserved.</div>
 </footer>
 
 <script>
-  // Custom cursor
+  // --- CUSTOM CURSOR ---
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -830,140 +810,121 @@
   });
 
   (function animRing() {
-    rx += (mx - rx) * 1;
-    ry += (my - ry) * 1;
+    rx += (mx - rx) * 0.15; // Adjusted easing slightly for smoothness
+    ry += (my - ry) * 0.15;
     ring.style.left = rx + 'px';
     ring.style.top  = ry + 'px';
     requestAnimationFrame(animRing);
   })();
 
-  document.querySelectorAll('a, button, input, textarea, select, .cat-card').forEach(function(el) {
-    el.addEventListener('mouseenter', function() {
-      ring.style.width = '56px'; ring.style.height = '56px';
-      ring.style.borderColor = 'rgba(200,169,110,0.8)';
+  // Re-run hover binds when dynamic content is added
+  function bindCursorHover() {
+    document.querySelectorAll('a, button, input, textarea, select, .cat-card, .gallery-photo').forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        ring.style.width = '56px'; ring.style.height = '56px';
+        ring.style.borderColor = 'rgba(200,169,110,0.8)';
+      });
+      el.addEventListener('mouseleave', function() {
+        ring.style.width = '36px'; ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(200,169,110,0.5)';
+      });
     });
-    el.addEventListener('mouseleave', function() {
-      ring.style.width = '36px'; ring.style.height = '36px';
-      ring.style.borderColor = 'rgba(200,169,110,0.5)';
+  }
+  bindCursorHover(); // Run on initial load
+
+  // --- SCROLL REVEAL ---
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
     });
-  });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Scroll reveal
-  var revealObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(function(r) { revealObserver.observe(r); });
+  // --- FORM SUBMIT (Mock) ---
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
 
-  // Gallery data
-  var galleries = {
-    portrait: {
-      title: 'Portrait',
-      desc: 'Intimate studies of light, expression, and the human form.',
-      photos: [
-        { bg:'gp1',  label:'Golden Hour' },
-        { bg:'gp2',  label:'Studio Session' },
-        { bg:'gp3',  label:'Candid Light' },
-        { bg:'gp4',  label:'Soft Shadow' },
-        { bg:'gp5',  label:'Window Study' },
-        { bg:'gp6',  label:'Morning Portrait' },
-        { bg:'gp7',  label:'Dusk Profile' },
-        { bg:'gp8',  label:'Film Look' },
-        { bg:'gp9',  label:'Backlit' },
-        { bg:'gp10', label:'Monochrome' },
-        { bg:'gp11', label:'Close-up' },
-        { bg:'gp12', label:'Environmental' }
-      ]
-    },
-    landscape: {
-      title: 'Landscape',
-      desc: 'The quiet drama of nature — mountains, fog, and vast open sky.',
-      photos: [
-        { bg:'gp3',  label:'Mountain Silence' },
-        { bg:'gp6',  label:'Fog and Forest' },
-        { bg:'gp9',  label:'Coastal Dusk' },
-        { bg:'gp2',  label:'Desert Dawn' },
-        { bg:'gp11', label:'Valley Mist' },
-        { bg:'gp5',  label:'Lakeside' },
-        { bg:'gp8',  label:'Storm Light' },
-        { bg:'gp1',  label:'Golden Meadow' },
-        { bg:'gp12', label:'Winter Veil' }
-      ]
-    },
-    editorial: {
-      title: 'Editorial',
-      desc: 'Concept-driven visual storytelling for publications and brands.',
-      photos: [
-        { bg:'images/IMG_6279.JPEG',  label:'Editorial Study' },
-        { bg:'gp8',  label:'Urban Geometry' },
-        { bg:'gp2',  label:'Studio Minimal' },
-        { bg:'gp10', label:'High Contrast' },
-        { bg:'gp4',  label:'Fashion Noir' },
-        { bg:'gp7',  label:'Architectural' },
-        { bg:'gp1',  label:'Still Life' },
-        { bg:'gp12', label:'Product Study' }
-      ]
-    }
+  // --- GALLERY & LIGHTBOX DATA (Sample Images) ---
+  const galleryData = {
+    portrait: [
+      { src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80', caption: 'Studio Portrait' },
+      { src: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80', caption: 'B&W Editorial' },
+      { src: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80', caption: 'Natural Light' },
+      { src: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80', caption: 'Golden Hour' },
+      { src: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=800&q=80', caption: 'Street Style' }
+    ],
+    landscape: [
+      { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80', caption: 'Mountain Pass' },
+      { src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80', caption: 'Foggy Morning' },
+      { src: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80', caption: 'Forest Path' },
+      { src: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=800&q=80', caption: 'Coastal View' }
+    ],
+    editorial: [
+      { src: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80', caption: 'Fashion Week' },
+      { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80', caption: 'Vogue Concept' },
+      { src: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80', caption: 'Minimalist' },
+      { src: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80', caption: 'Urban Style' }
+    ]
   };
 
-  function openGallery(cat) {
-    var data    = galleries[cat];
-    var overlay = document.getElementById('galleryOverlay');
-    var grid    = document.getElementById('galleryGrid');
+  const descriptions = {
+    portrait: "Intimate studies of light, expression, and the human form.",
+    landscape: "Documentary landscapes exploring the quiet drama of the horizon.",
+    editorial: "Concept-driven visual storytelling for publications and brands."
+  };
 
-    document.getElementById('galleryBreadcrumb').textContent = data.title;
-    document.getElementById('galleryTitle').innerHTML = data.title + ' <span>Photography</span>';
-    document.getElementById('galleryDesc').textContent = data.desc;
+  // --- GALLERY LOGIC ---
+  function openGallery(category) {
+    const grid = document.getElementById('galleryGrid');
+    const images = galleryData[category];
+    
+    // Update headers
+    document.getElementById('galleryBreadcrumb').innerText = category;
+    document.getElementById('galleryTitle').innerHTML = `${category} <span>Photography</span>`;
+    document.getElementById('galleryDesc').innerText = descriptions[category];
 
-    grid.innerHTML = data.photos.map(function(p) {
-      return '<div class="gallery-photo">' +
-        '<div class="gallery-photo-inner ' + p.bg + '"></div>' +
-        '<div class="gallery-photo-label">' + p.label + '</div>' +
-        '</div>';
-    }).join('');
-
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() { overlay.classList.add('visible'); });
+    // Clear and build grid
+    grid.innerHTML = '';
+    images.forEach(img => {
+      const html = `
+        <div class="gallery-photo" onclick="openLightbox('${img.src}')">
+          <img src="${img.src}" alt="${img.caption}">
+          <div class="gallery-photo-label">${img.caption}</div>
+        </div>
+      `;
+      grid.insertAdjacentHTML('beforeend', html);
     });
+
+    // Show Overlay & bind cursor hover to new elements
+    document.getElementById('galleryOverlay').classList.add('visible');
+    bindCursorHover(); 
   }
 
   function closeGallery() {
-    var overlay = document.getElementById('galleryOverlay');
-    overlay.classList.remove('visible');
-    setTimeout(function() {
-      overlay.style.display = 'none';
-      document.body.style.overflow = '';
-    }, 450);
+    document.getElementById('galleryOverlay').classList.remove('visible');
   }
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeGallery();
-  });
+  // --- LIGHTBOX LOGIC ---
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
 
-  // Contact form
-  function handleSubmit(e) {
-    e.preventDefault();
-    var name    = document.getElementById('fname').value.trim();
-    var email   = document.getElementById('femail').value.trim();
-    var service = document.getElementById('fservice').value;
-    var message = document.getElementById('fmessage').value.trim();
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add('visible');
+  }
 
-    var subject = encodeURIComponent('Photography Inquiry' + (service ? ' - ' + service : ''));
-    var body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nService: ' + (service || 'N/A') + '\n\nMessage:\n' + message);
-
-    // Replace with your actual email address below
-    window.location.href = 'mailto:stamatopoulospavlos1@gmail.com?subject=' + subject + '&body=' + body;
-
-    document.getElementById('contactForm').style.display = 'none';
-    var success = document.getElementById('formSuccess');
-    success.style.display = 'block';
-    setTimeout(function() {
-      success.style.display = 'none';
-      document.getElementById('contactForm').style.display = 'block';
-      document.getElementById('contactForm').reset();
-    }, 5000);
+  function closeLightbox(e) {
+    // Only close if clicking outside the image or exactly on the close button
+    if (e.target === lightbox || e.target.closest('.lightbox-close')) {
+      lightbox.classList.remove('visible');
+      setTimeout(() => lightboxImg.src = '', 400); // clear src after animation
+    }
   }
 </script>
 </body>
-</html>'
+</html>
