@@ -38,19 +38,19 @@ body {
 /* ── Custom cursor ── */
 #cursor {
   position: fixed; z-index: 9999;
-  width: 7px; height: 7px;
+  width: 9px; height: 9px;
   background: var(--gold); border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
 }
 #cursorRing {
-  position: fixed; z-index: 9998;
-  width: 34px; height: 34px;
-  border: 1px solid rgba(200,169,110,0.45);
+  position: fixed; z-index: 9999;
+  width: 10px; height: 10px;
+  border: 8px solid rgba(213, 200, 175, 0.278);
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: width .2s, height .2s, opacity .2s;
+  transition: width .1s, height .1s, opacity .1s;
 }
 
 /* ============================================================

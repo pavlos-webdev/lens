@@ -10,8 +10,8 @@ document.addEventListener('mousemove', function(e) {
 });
 
 (function animRing() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
+  rx += (mx - rx) * 1;
+  ry += (my - ry) * 1;
   ring.style.left = rx + 'px';
   ring.style.top  = ry + 'px';
   requestAnimationFrame(animRing);
@@ -20,13 +20,13 @@ document.addEventListener('mousemove', function(e) {
 function bindCursorHover() {
   document.querySelectorAll('a, button, input, textarea, select, .cat-card, .gallery-photo').forEach(function(el) {
     el.addEventListener('mouseenter', function() {
-      ring.style.width  = '56px';
-      ring.style.height = '56px';
+      ring.style.width  = '10px';
+      ring.style.height = '10px';
       ring.style.borderColor = 'rgba(200,169,110,0.8)';
     });
     el.addEventListener('mouseleave', function() {
-      ring.style.width  = '36px';
-      ring.style.height = '36px';
+      ring.style.width  = '10px';
+      ring.style.height = '10px';
       ring.style.borderColor = 'rgba(200,169,110,0.5)';
     });
   });
