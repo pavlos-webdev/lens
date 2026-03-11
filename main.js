@@ -69,8 +69,8 @@ function setCover(event, category) {
 const galleryData = {
   portrait: [
     { src: 'images/IMG_6279.JPEG', caption: 'Green Viper' },
-    { src: 'images/_MG_8883.jpeg', caption: 'AMG CLA45 - In the Woods ' },
-    { src: 'images/_MG_5741.jpeg', caption: 'Mazda3 - Wintery Blizzard' },
+    { src: 'images/merc-amg-cla45.jpeg', caption: 'AMG CLA45 - In the Woods ' },
+    { src: 'images/mazda3-snowy-blizzard.JPEG', caption: 'Mazda3 - Wintery Blizzard' },
     { src: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80', caption: 'Golden Hour' },
     { src: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=800&q=80', caption: 'Street Style' }
   ],
