@@ -897,8 +897,7 @@
 
     grid.innerHTML = data.photos.map(function(p) {
       return '<div class="gallery-photo">' +
-        '<div class="gallery-photo-inner ' + p.bg + '"></div>' +
-        '<div class="gallery-photo-hint">Replace with<br>your image</div>' +
+        '<div class="gallery-photo-inner ' + p.bg + '"></div>' 
         '<div class="gallery-photo-label">' + p.label + '</div>' +
         '</div>';
     }).join('');
