@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LENS — Photography Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#hero" class="nav-logo">LENS</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid">
+      <div class="hero-grid-img hg1"></div>
+      <div class="hero-grid-img hg2"></div>
+      <div class="hero-grid-img hg3"></div>
+      <div class="hero-grid-img hg4"></div>
+      <div class="hero-grid-img hg5"></div>
+      <div class="hero-grid-img hg6"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Photography &amp; Visual Art</p>
+      <h1 class="hero-title">
+        Pavlos<br>Stamatopoulos
+        <em>Through my lens</em>
+      </h1>
+      <p class="hero-sub">Capturing the light between moments — editorial, portrait, and landscape photography.</p>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="about-portrait">
+      <div class="portrait-frame"></div>
+      <div class="portrait-placeholder">Your<br>Portrait</div>
+    </div>
+    <div class="about-text">
+      <p class="section-label reveal">About the photographer</p>
+      <h2 class="section-title reveal reveal-delay-1">The Eye<br>Behind It</h2>
+      <p class="about-body reveal reveal-delay-2">
+        I am a photographer driven by the quiet drama of everyday light — the way it falls through a window, bends around a face, or dissolves into a horizon. My work spans editorial portraiture, documentary landscapes, and intimate lifestyle stories.
+      </p>
+      <p class="about-body reveal reveal-delay-2">
+        Based in Chicago, Illinois, I've worked with publications, brands, and individuals who believe great photography is not just technique — it's a point of view.
+      </p>
+      <div class="about-stats reveal reveal-delay-3">
+        <div>
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Years shooting</div>
+        </div>
+        <div>
+          <div class="stat-num">340</div>
+          <div class="stat-label">Projects done</div>
+        </div>
+        <div>
+          <div class="stat-num">12</div>
+          <div class="stat-label">Awards won</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <div class="portfolio-header">
+      <p class="section-label reveal">Selected Work</p>
+      <h2 class="section-title reveal">Portfolio</h2>
+    </div>
+    <div class="cat-grid">
+
+      <div class="cat-card reveal" onclick="openGallery('portrait')">
+        <div class="cat-card-bg cat-bg-portrait">
+          <div class="cat-imgs">
+            <div class="ct1"></div>
+            <div class="ct2"></div>
+            <div class="ct3"></div>
+          </div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-arrow">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-num">01 — Category</div>
+          <div class="cat-name">Portrait</div>
+          <div class="cat-count">5 Images</div>
+        </div>
+      </div>
+
+      <div class="cat-card reveal reveal-delay-1" onclick="openGallery('landscape')">
+        <div class="cat-card-bg cat-bg-landscape">
+          <div class="cat-imgs">
+            <div class="ct5"></div>
+            <div class="ct6"></div>
+            <div class="ct7"></div>
+          </div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-arrow">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-num">02 — Category</div>
+          <div class="cat-name">Landscape</div>
+          <div class="cat-count">4 Images</div>
+        </div>
+      </div>
+
+      <div class="cat-card reveal reveal-delay-2" onclick="openGallery('editorial')">
+        <div class="cat-card-bg cat-bg-editorial">
+          <div class="cat-imgs">
+            <div class="ct9"></div>
+            <div class="ct10"></div>
+            <div class="ct11"></div>
+          </div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-arrow">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-num">03 — Category</div>
+          <div class="cat-name">Editorial</div>
+          <div class="cat-count">4 Images</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gallery Overlay -->
+  <div id="galleryOverlay">
+    <div class="gallery-nav">
+      <div class="gallery-breadcrumb">
+        <a href="#" onclick="closeGallery(); return false;">Portfolio</a>
+        <span class="sep">/</span>
+        <span class="current" id="galleryBreadcrumb">Portrait</span>
+      </div>
+      <button class="gallery-close" onclick="closeGallery()">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Close
+      </button>
+    </div>
+    <div class="gallery-title-bar">
+      <h2 id="galleryTitle">Portrait <span>Photography</span></h2>
+      <p class="gallery-desc" id="galleryDesc">Intimate studies of light, expression, and the human form.</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Close
+    </button>
+    <img id="lightbox-img" src="" alt="Expanded view">
+  </div>
+
+  <!-- Services -->
+  <section id="services">
+    <p class="section-label reveal">What I offer</p>
+    <h2 class="section-title reveal">Services</h2>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-name">Portrait Sessions</div>
+        <p class="service-desc">Individual and couples portraiture — in-studio or on location. Natural, directorial, or documentary style tailored to your vision.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-name">Editorial &amp; Commercial</div>
+        <p class="service-desc">Brand campaigns, magazine editorials, product shoots. Concept-driven visual storytelling for publications and businesses.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-name">Events &amp; Coverage</div>
+        <p class="service-desc">Weddings, gallery openings, cultural events. Discreet documentary coverage that preserves the atmosphere of the moment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <p class="section-label reveal">Get in touch</p>
+    <h2 class="section-title reveal">Let's Create<br>Something</h2>
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <h3>"Every great photograph begins with a conversation."</h3>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Email</div>
+          <div class="contact-detail-value">stamatopoulospavlos1@gmail.com</div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Location</div>
+          <div class="contact-detail-value">Chicago, Illinois</div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Response time</div>
+          <div class="contact-detail-value">Within 24 hours</div>
+        </div>
+        <div class="contact-socials">
+          <a href="#" class="social-link">Instagram</a>
+          <a href="#" class="social-link">Behance</a>
+          <a href="#" class="social-link">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="contact-form reveal reveal-delay-1">
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="fname">Full Name</label>
+              <input class="form-input" type="text" id="fname" name="fname" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="femail">Email Address</label>
+              <input class="form-input" type="email" id="femail" name="femail" placeholder="jane@example.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fservice">Service Interested In</label>
+            <select class="form-select form-input" id="fservice" name="fservice">
+              <option value="">Select a service...</option>
+              <option>Portrait Session</option>
+              <option>Editorial / Commercial</option>
+              <option>Wedding Coverage</option>
+              <option>Event Photography</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fmessage">Your Message</label>
+            <textarea class="form-textarea" id="fmessage" name="fmessage" placeholder="Tell me about your project, timeline, and any ideas you have in mind..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">
+            <span>Send Message</span>
+            <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <h3>Message Sent</h3>
+          <p>Thank you for reaching out. I'll be in touch within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">LENS</div>
+    <div class="footer-copy">&copy; 2026 Pavlos Stamatopoulos. All rights reserved.</div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
