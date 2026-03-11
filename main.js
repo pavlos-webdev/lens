@@ -66,12 +66,12 @@ function initCovers() {
 // ── Gallery Data ──
 const galleryData = {
   portrait: [
-    { src: 'images/mclaren-fading-to-purple.JPEG',  caption: 'Mclaren - Fading to Purple' },
+    { src: 'images/mclaren-fading-to-purple.jpeg',  caption: 'Mclaren - Fading to Purple' },
     { src: 'images/viper-green.JPEG',            caption: 'Viper - Green Snake' },
-    { src: 'images/merc-amg-cla45.JPEG',         caption: 'AMG CLA45 - In the Woods' },
-    { src: 'images/mazda3-snowy-blizzard.JPEG',  caption: 'Mazda3 - Wintery Blizzard' },
-    { src: 'images/porsche-911-wingman.JPEG',    caption: 'Porsche 911 - Wingman' },
-    { src: 'images/mclaren-front-bpillar.JPEG',  caption: 'Mclaren - Angels Alore' },
+    { src: 'images/merc-amg-cla45.jpeg',         caption: 'AMG CLA45 - In the Woods' },
+    { src: 'images/mazda3-snowy-blizzard.jpeg',  caption: 'Mazda3 - Wintery Blizzard' },
+    { src: 'images/porsche-911-wingman.jpeg',    caption: 'Porsche 911 - Wingman' },
+    { src: 'images/mclaren-front-bpillar.jpeg',  caption: 'Mclaren - Angels Alore' },
   ],
   landscape: [
     { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80', caption: 'Mountain Pass' },
