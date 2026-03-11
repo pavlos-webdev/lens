@@ -91,6 +91,7 @@
     <div class="cat-grid">
 
       <div class="cat-card reveal" onclick="openGallery('portrait')">
+        <input type="file" id="cover-portrait" accept="image/*" style="display:none" onchange="setCover(event,'portrait')" onclick="event.stopPropagation()">
         <div class="cat-card-bg cat-bg-portrait">
           <div class="cat-imgs">
             <div class="ct1"></div>
@@ -99,6 +100,14 @@
           </div>
         </div>
         <div class="cat-card-overlay"></div>
+        <button class="cover-pick-btn" onclick="event.stopPropagation(); document.getElementById('cover-portrait').click()" title="Set cover photo">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M2 11l3-3 2 2 4-5 3 6H2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <circle cx="5.5" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="1" y="1" width="14" height="14" rx="1" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          Cover
+        </button>
         <div class="cat-arrow">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
             <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -112,6 +121,7 @@
       </div>
 
       <div class="cat-card reveal reveal-delay-1" onclick="openGallery('landscape')">
+        <input type="file" id="cover-landscape" accept="image/*" style="display:none" onchange="setCover(event,'landscape')" onclick="event.stopPropagation()">
         <div class="cat-card-bg cat-bg-landscape">
           <div class="cat-imgs">
             <div class="ct5"></div>
@@ -120,6 +130,14 @@
           </div>
         </div>
         <div class="cat-card-overlay"></div>
+        <button class="cover-pick-btn" onclick="event.stopPropagation(); document.getElementById('cover-landscape').click()" title="Set cover photo">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M2 11l3-3 2 2 4-5 3 6H2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <circle cx="5.5" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="1" y="1" width="14" height="14" rx="1" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          Cover
+        </button>
         <div class="cat-arrow">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
             <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -133,6 +151,7 @@
       </div>
 
       <div class="cat-card reveal reveal-delay-2" onclick="openGallery('editorial')">
+        <input type="file" id="cover-editorial" accept="image/*" style="display:none" onchange="setCover(event,'editorial')" onclick="event.stopPropagation()">
         <div class="cat-card-bg cat-bg-editorial">
           <div class="cat-imgs">
             <div class="ct9"></div>
@@ -141,6 +160,14 @@
           </div>
         </div>
         <div class="cat-card-overlay"></div>
+        <button class="cover-pick-btn" onclick="event.stopPropagation(); document.getElementById('cover-editorial').click()" title="Set cover photo">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M2 11l3-3 2 2 4-5 3 6H2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <circle cx="5.5" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="1" y="1" width="14" height="14" rx="1" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          Cover
+        </button>
         <div class="cat-arrow">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
             <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
