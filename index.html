@@ -810,8 +810,8 @@
   });
 
   (function animRing() {
-    rx += (mx - rx) * 0.15; // Adjusted easing slightly for smoothness
-    ry += (my - ry) * 0.15;
+    rx += (mx - rx) * 1; // Adjusted easing slightly for smoothness
+    ry += (my - ry) * 1;
     ring.style.left = rx + 'px';
     ring.style.top  = ry + 'px';
     requestAnimationFrame(animRing);
