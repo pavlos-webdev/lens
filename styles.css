@@ -258,9 +258,9 @@ section { padding: 8rem 3.5rem; }
   transition: transform .7s cubic-bezier(.25,.46,.45,.94);
 }
 .cat-card:hover .cat-card-bg { transform: scale(1.06); }
-.cat-bg-portrait  { background: linear-gradient(145deg,#1a1510,#2d2218 50%,#1a1a1a); }
-.cat-bg-landscape { background: linear-gradient(160deg,#0e1418,#1a2430); }
-.cat-bg-editorial { background: linear-gradient(150deg,#181010,#2a1818); }
+.cat-bg-cars  { background: linear-gradient(145deg,#1a1510,#2d2218 50%,#1a1a1a); }
+.cat-bg-portraits { background: linear-gradient(160deg,#0e1418,#1a2430); }
+.cat-bg-landscape { background: linear-gradient(150deg,#181010,#2a1818); }
 .cat-imgs {
   position: absolute; inset: 0;
   display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
