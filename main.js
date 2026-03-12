@@ -65,7 +65,7 @@ function initCovers() {
 
 // ── Gallery Data ──
 const galleryData = {
-  portrait: [
+  cars: [
     { src: 'images/mclaren-fading-to-purple.jpeg',  caption: 'Mclaren - Fading to Purple' },
     { src: 'images/viper-green.JPEG',            caption: 'Viper - Green Snake' },
     { src: 'images/merc-amg-cla45.jpeg',         caption: 'AMG CLA45 - In the Woods' },
@@ -73,13 +73,13 @@ const galleryData = {
     { src: 'images/porsche-911-wingman.jpeg',    caption: 'Porsche 911 - Wingman' },
     { src: 'images/mclaren-front-bpillar.jpeg',  caption: 'Mclaren - Angels Alore' },
   ],
-  landscape: [
+  portraits: [
     { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80', caption: 'Mountain Pass' },
     { src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80', caption: 'Foggy Morning' },
     { src: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80', caption: 'Forest Path' },
     { src: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=800&q=80', caption: 'Coastal View' }
   ],
-  editorial: [
+  landscapes: [
     { src: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80', caption: 'Fashion Week' },
     { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80', caption: 'Vogue Concept' },
     { src: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80', caption: 'Minimalist' },
@@ -88,9 +88,9 @@ const galleryData = {
 };
 
 const descriptions = {
-  portrait:  'Intimate studies of light, expression, and the human form.',
-  landscape: 'Documentary landscapes exploring the quiet drama of the horizon.',
-  editorial: 'Concept-driven visual storytelling for publications and brands.'
+  cars:  'Automotive design, motion, and the elegance of machines.',
+  portraits: 'Intimate studies of light, expression, and the human form.',
+  landscape: 'Documentary landscapes exploring the quiet drama of the horizon.'
 };
 
 // ── Initialise covers once DOM + data are ready ──
